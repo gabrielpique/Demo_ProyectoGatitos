@@ -1,0 +1,114 @@
+﻿@{
+    ViewData["Title"] = "Donar - Proyecto Gatitos";
+}
+
+<style>
+    .pre-adoption-title {
+        color: #2A2A2A;
+        font-size: 1rem;
+        font-weight: 500;
+        margin-bottom: 1rem;
+        margin-top: 1.5rem;
+        letter-spacing: 0.5px;
+    }
+
+    
+    .pre-adoption-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 8px;
+        width: 250px;
+        padding: 0.8rem 1.5rem;
+        background-color: transparent;
+        color: #2A2A2A;
+        text-decoration: none;
+        border-radius: 30px;
+        transition: all 0.3s ease;
+        border: 1px solid #2A2A2A;
+        font-weight: 500;
+    }
+
+        .pre-adoption-link:hover {
+            background-color: rgba(157, 191, 158, 0.2);
+            color: #B54E68
+        }
+
+    .pre-adoption-section {
+        margin-bottom: 20px;
+        margin-top: 20px;
+        text-align:center;
+    }
+
+    .contenedor {
+        text-align: center; 
+    }
+
+    .lista-centrada {
+        display: inline-block; 
+        text-align: left;
+        list-style-position: inside; 
+        padding-left: 0; 
+    }
+
+    .aporte-title{
+        margin-top:60px;
+    }
+
+    .donation-section{
+        margin-top:40px;
+    }
+
+    @@media (max-width: 768px) {
+        .pre-adoption-section {
+            text-align: center;
+        }
+    }
+    
+</style>
+
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<div class="donation-section">
+    <h4 class="text-center" style="margin-bottom:30px;">¡Estás a un paso de ayudar a los gatitos!</h4>
+    <div class="pre-adoption-section">
+        <a href="https://link.mercadopago.com.ar/proyectogatitos" class="pre-adoption-link" target="_blank">
+            <img src="/images/mercado-pago.png" alt="MercadoPago" style="width: 20px; height: 20px; margin-right: 8px;"> 
+            <span>Donar</span>
+        </a>
+    </div>
+    <div class="pre-adoption-section">
+        <a href="https://www.mercadopago.com.ar/subscriptions/checkout?preapproval_plan_id=2c9380849620782f0196219670ed00d1" class="pre-adoption-link" target="_blank">
+            <i class="fas fa-hand-holding-heart"></i>
+            <span>Doná mensualmente</span>
+        </a>
+    </div>
+    <div class="pre-adoption-section">
+        <a href="https://cafecito.app/proyectogatitos" class="pre-adoption-link" target="_blank">
+            <i class="fas fa-coffee"></i> 
+            <span>Cafecito</span>
+        </a>
+    </div>
+    <div class="pre-adoption-section">
+        <a href="https://www.paypal.com/paypalme/MaxCirugia" class="pre-adoption-link" target="_blank">
+            <i class="fab fa-paypal"></i> 
+            <span>Paypal</span>
+        </a>
+    </div>
+    
+    <h3 class="text-center aporte-title">
+        Tu aporte suma para:
+    </h3>
+    <div class="contenedor">
+        <ul class="lista-centrada">
+            <li>Alimento balanceado y piedritas.</li>
+            <li>Atención veterinaria.</li>
+            <li>Castraciones.</li>
+            <li>Análisis de sangre.</li>
+            <li>Vacunas</li>
+            <li>Y más</li>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,385 @@
+﻿@{
+    ViewData["Title"] = "Refugios Externos | Proyecto Gatitos";
+}
+<link href="~/css/site.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+@section Styles {
+    <style>
+        /* :root {
+            --primary1: #4A7047;
+            --primary: #5F7B5C;
+            --primary-light: #A7D397;
+            --accent: #F9D08D;
+            --text: #333333;
+            --text-light: #666666;
+            --bg: #f8f8f8;
+            --white: #ffffff;
+            --rose: #e8a6b8;
+        } */
+
+        :root{
+            --primary: #3D5A3D; 
+            --primary-light: #8BC187; 
+            --accent: #F7B95A; 
+            --text: #222222; 
+            --text-light: #444444; 
+            --bg: #f2f2f2;
+            --white: #ffffff;
+            /* --rose: #e88da5; */ 
+            --rose: #e67297;
+        }
+
+        .refugio-title {
+            white-space: nowrap;
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+            /* background-color: var(--bg); */
+        }
+
+        .hero-section {
+            text-align: center;
+            margin-bottom: 0.5rem;
+            padding: 0.5rem 0;
+        }
+
+        h1 {
+            color: var(--primary);
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .subtitle {
+            color: var(--text-light);
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 0.1rem;
+            line-height: 1.6;
+        }
+
+        .action-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+
+        .action-item {
+            background: rgba(255, 182, 193, 0.2);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.03);
+        }
+
+            .action-item:hover {
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+                border-color: var(--rose);
+            }
+
+        .action-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+
+        .action-title {
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+        }
+
+        .action-description {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+        }
+
+        .action-link {
+            display: inline-block;
+            padding: 0.6rem 1.5rem;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+            .action-link:hover {
+                background-color: var(--primary-light);
+                /* transform: scale(1.05); */
+                color: white;
+            }
+
+        .cta-section {
+            /* background-color: var(--white); */
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 1rem 0;
+            text-align: center;
+            /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); */
+        }
+
+        .cta-title {
+            font-size: 1.4rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 2rem;
+            background-color: var(--accent);
+            color: var(--text);
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+            .cta-button:hover {
+                background-color: var(--primary-light);
+                color: white;
+            }
+
+        .cta-banner {
+            background: linear-gradient(135deg, #fde4ec, #f8bbd0); 
+            padding: 2rem 1.5rem;
+            border-radius: 16px;
+            margin: 2rem auto;
+            max-width: 900px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            color: #4a148c;
+        }
+
+        .cta-banner-title {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: #880e4f; 
+            font-weight: 700;
+        }
+
+        .cta-banner-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .cta-text h2 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .cta-text p {
+            font-size: 1.1rem;
+            margin: 0;
+        }
+
+        .cta-banner-button {
+            background-color: #f8bbd0;
+            color: #880e4f;
+            padding: 0.9rem 1.6rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 999px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: background 0.3s ease, transform 0.2s ease;
+            border: 2px solid #f48fb1;
+        }
+
+            .cta-banner-button:hover {
+                background-color: #f48fb1;
+                transform: scale(1.03);
+            }
+
+
+            .cta-banner-button i {
+                font-size: 1.2rem;
+            }
+
+            .cta-banner-button:hover {
+                background-color: #f48fb1;
+                transform: translateY(-2px);
+                border-color: #ec407a; 
+            }
+
+
+        .styled-cta {
+            padding: 2rem 1.5rem;
+            margin: 2rem auto;
+            max-width: 800px;
+            text-align: center;
+            color: #4a148c;
+        }
+
+        .styled-cta-button {
+            background-color: #f8bbd0;
+            color: #880e4f;
+            padding: 0.8rem 1.4rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 999px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.07);
+            transition: background 0.3s ease, transform 0.2s ease;
+            border: 2px solid #f48fb1;
+        }
+
+            .styled-cta-button:hover {
+                background-color: #f48fb1;
+                transform: translateY(-2px);
+                border-color: #ec407a;
+            }
+
+        .instagram-follow-pretty {
+            padding: 1.5rem;
+            text-align: center;
+            margin: 2rem auto;
+            max-width: 500px;
+            color: #880e4f;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .instagram-text {
+            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .insta-link-pretty {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            background-color: #f8bbd0;
+            padding: 0.6rem 1rem;
+            border-radius: 999px;
+            color: #880e4f;
+            font-weight: 600;
+            transition: background 0.3s ease;
+            border: 2px solid #f48fb1;
+        }
+
+            .insta-link-pretty:hover {
+                background-color: #f48fb1;
+            }
+
+        .instagram-icon-pretty {
+            width: 24px;
+            height: 24px;
+        }
+
+        @@media (min-width: 769px) {
+            .action-grid {
+                grid-template-columns: repeat(2, 1fr); 
+            }
+        }
+
+        @@media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .subtitle {
+                font-size: 0.7rem;
+            }
+
+            .action-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .action-item {
+                padding: 1.5rem;
+            }
+
+            .cta-banner {
+                padding: 1.5rem 1rem;
+            }
+
+            .cta-banner-title {
+                font-size: 1.4rem;
+            }
+
+            .cta-banner-button {
+                padding: 0.8rem 1.2rem;
+                font-size: 0.9rem;
+            }
+            .cta-banner p{
+                font-size:1rem;
+            }
+
+            .action-item:hover {
+                border-color: #f0c0d1 !important; 
+                box-shadow: none;
+                transform: none;
+            }
+
+            .action-item {
+                transition: none !important;
+            }
+
+        }
+    </style>
+    }
+
+<div class="refugios-externos-section" style="margin-top: 60px; padding: 40px 20px;">
+    <h1 class="refugio-title" style="text-align:center; font-size: 1.8rem; color: #3B5F7A; margin-bottom: 30px;">REFUGIOS EXTERNOS</h1>
+    <p style="text-align: center; font-size: 1.05rem; color: #3B5F7A; margin-bottom: 30px; max-width: 600px; margin-left: auto; margin-right: auto;">
+        En <strong>Proyecto Gatitos</strong> también colaboramos con otros refugios, ayudándolos a encontrar hogar para sus rescataditos.<br />
+        <em>Juntos salvamos más vidas</em>. 💙
+    </p>
+    @if (User.IsInRole("Admin"))
+    {
+        <div style="text-align: center;">
+            <a href="@Url.Action("CrearDesdeRefugio", "Adopciones")" class="action-link">Nueva adopción</a>
+        </div>
+
+        <br />
+    }
+    <div class="action-grid">
+        <div class="action-item" style="border: 1px solid #3B5F7A; background-color: transparent; color: #3B5F7A;">
+            <div class="action-icon" style="color: #3B5F7A;"><i class="fas fa-cat"></i></div>
+            <h3 class="action-title" style="color: #3B5F7A;">Adoptar en otros Refugios</h3>
+            <p class="action-description" style="color: #3B5F7A;">
+                Conocé a los rescatados de refugios externos a Proyecto Gatitos que están listos para encontrar una familia.
+            </p>
+            <a href="@Url.Action("AdopcionesPendientesRefugios", "Adopciones")" class="action-link"
+               style="display: inline-block; padding: 10px 20px; background-color: #3B5F7A; color: white; border-radius: 6px; text-decoration: none;">
+                GATOS EN ADOPCIÓN
+            </a>
+        </div>
+
+        <div class="action-item" style="border: 1px solid #3B5F7A; background-color: transparent; color: #3B5F7A;">
+            <div class="action-icon" style="color: #3B5F7A;"><i class="fas fa-paw"></i></div>
+            <h3 class="action-title" style="color: #3B5F7A;">Adoptados de otros Refugios</h3>
+            <p class="action-description" style="color: #3B5F7A;">
+                Historias de rescatados que encontraron hogar.
+            </p>
+            <a href="@Url.Action("AdopcionesRealizadasRefugiosExternos", "Adopciones")" class="action-link"
+               style="display: inline-block; padding: 10px 20px; background-color: #3B5F7A; color: white; border-radius: 6px; text-decoration: none;">
+                ADOPTADOS
+            </a>
+        </div>
+    </div>
+</div>

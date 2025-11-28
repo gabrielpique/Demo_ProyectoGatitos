@@ -1,0 +1,224 @@
+﻿@model LoginViewModel
+
+@{
+    ViewData["Title"] = "Iniciar Sesión";
+}
+
+<div class="auth-wrapper">
+    <div class="auth-container">
+        <div class="auth-header">
+            <h2 class="auth-title">🐾 Iniciar Sesión</h2>
+            <p class="auth-subtitle">Ingresá a tu cuenta de Proyecto Gatitos</p>
+        </div>
+
+        <form asp-action="Login" method="post" class="auth-form">
+            @if (ViewData.ModelState.ErrorCount > 0)
+            {
+                <div asp-validation-summary="All" class="validation-errors"></div>
+            }
+
+            <div class="input-group">
+                <label asp-for="Email" class="input-label">Correo Electrónico</label>
+                <div class="input-container">
+                    <input asp-for="Email" class="form-input" placeholder="ejemplo@correo.com" />
+                    <span class="input-icon">✉️</span>
+                </div>
+                <span asp-validation-for="Email" class="input-error"></span>
+            </div>
+
+            <div class="input-group">
+                <label asp-for="Password" class="input-label">Contraseña</label>
+                <div class="input-container">
+                    <input asp-for="Password" class="form-input" placeholder="••••••••" />
+                    <span class="input-icon">🔒</span>
+                </div>
+                <span asp-validation-for="Password" class="input-error"></span>
+            </div>
+
+            <div class="remember-me">
+                <input asp-for="RememberMe" id="rememberMe" class="custom-checkbox" />
+                <label for="rememberMe" class="checkbox-label">Mantener sesión iniciada</label>
+            </div>
+
+            <button type="submit" class="auth-btn">
+                <span class="btn-text">Iniciar Sesión</span>
+                <span class="btn-icon">→</span>
+            </button>
+        </form>
+
+        <div class="auth-footer">
+            <p>¿No tenés cuenta? <a href="@Url.Action("Register")" class="auth-link">Regístrate acá</a></p>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <style>
+        .auth-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh;
+            padding: 2rem;
+            background-color: rgba(255, 248, 240, 0.7);
+        }
+
+        .auth-container {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            padding: 2.5rem;
+            width: 100%;
+            max-width: 450px;
+            transition: transform 0.3s ease;
+        }
+
+            .auth-container:hover {
+                transform: translateY(-5px);
+            }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .auth-title {
+            color: #C45C2A;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .auth-subtitle {
+            color: #7A6A5F;
+            font-size: 1rem;
+        }
+
+        .auth-form {
+            margin-top: 1.5rem;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .input-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #5A4A42;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .input-container {
+            position: relative;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.8rem 1rem 0.8rem 2.5rem;
+            border: 2px solid #EDE5DE;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background-color: #FDFAF7;
+        }
+
+            .form-input:focus {
+                border-color: #D97B29;
+                box-shadow: 0 0 0 3px rgba(217, 123, 41, 0.1);
+                outline: none;
+            }
+
+        .input-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #C45C2A;
+        }
+
+        .input-error {
+            color: #E74C3C;
+            font-size: 0.85rem;
+            margin-top: 0.3rem;
+            display: block;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            margin: 1.5rem 0;
+        }
+
+        .custom-checkbox {
+            width: 18px;
+            height: 18px;
+            margin-right: 0.75rem;
+            accent-color: #D97B29;
+            cursor: pointer;
+        }
+
+        .checkbox-label {
+            color: #5A4A42;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .auth-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #D97B29, #C45C2A);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(217, 123, 41, 0.2);
+        }
+
+            .auth-btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 12px rgba(217, 123, 41, 0.25);
+            }
+
+        .btn-icon {
+            font-size: 1.2rem;
+        }
+
+        .validation-errors {
+            color: #E74C3C;
+            background-color: #FDEDEC;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            border-left: 4px solid #E74C3C;
+        }
+
+        .auth-footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: #7A6A5F;
+            font-size: 0.95rem;
+        }
+
+        .auth-link {
+            color: #D97B29;
+            font-weight: 500;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+            .auth-link:hover {
+                color: #B84A14;
+                text-decoration: underline;
+            }
+    </style>
+}

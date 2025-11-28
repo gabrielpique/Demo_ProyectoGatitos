@@ -1,0 +1,183 @@
+﻿@model IEnumerable<ProyectoGatitos.Models.Formulario>
+
+<style>
+    h2 {
+        font-weight: 600;
+        font-size: 26px;
+        margin-bottom: 25px;
+        color: var(--primary);
+    }
+
+    .table-container {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 15px;
+        color: var(--text);
+    }
+
+    thead th {
+        text-align: left;
+        padding: 12px 10px;
+        font-weight: 500;
+        color: var(--primary);
+        border-bottom: 2px solid #ddd;
+    }
+
+    tbody td {
+        padding: 10px;
+        border-bottom: 1px solid #e4e4e4;
+    }
+
+    .no-revisado {
+        border-left: 4px solid #e67297; /* Rose suave */
+        background-color: rgba(230, 114, 151, 0.05); /* Muy sutil */
+    }
+
+    .btn-primary.btn-sm {
+        background-color: var(--accent);
+        border: none;
+        color: white;
+        font-weight: 500;
+        padding: 6px 12px;
+        font-size: 14px;
+        border-radius: 4px;
+        transition: background-color 0.2s ease;
+    }
+
+    .btn-primary.btn-sm:hover {
+        background-color: #e3a44b;
+    }
+
+    .btn-ver-detalle {
+        background-color: var(--primary);
+        border: none;
+        color: white;
+        font-weight: 500;
+        padding: 6px 12px;
+        font-size: 14px;
+        border-radius: 4px;
+        transition: background-color 0.2s ease;
+    }
+
+    .btn-ver-detalle:hover {
+        background-color: #2f482f; 
+    }
+
+    .revisado {
+        background-color: #e6f8e6 !important;
+    }
+
+    tr {
+        transition: background-color 0.3s ease;
+    }
+
+    @@media (max-width: 768px) {
+        table, thead, tbody, th, td, tr {
+            display: block;
+            width: 100%;
+        }
+
+        thead {
+            display: none;
+        }
+
+        tr {
+            margin-bottom: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 10px;
+        }
+
+        td {
+            padding: 8px 10px;
+        }
+
+        td::before {
+            content: attr(data-label);
+            font-weight: 600;
+            color: var(--primary);
+            display: block;
+            margin-bottom: 4px;
+        }
+    }
+</style>
+
+<h2>Formularios de Adopción</h2>
+
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Solicitante</th>
+                <th>Fecha de Solicitud</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                var rowClass = item.Revisado ? "revisado" : "no-revisado";
+                <tr id="formulario-@item.Id" class="@rowClass">
+                    <td data-label="Nombre">@item.Nombre @item.Apellido</td>
+                    <td data-label="Fecha de Solicitud">@item.FechaSolicitud.ToShortDateString()</td>
+                    <td data-label="Acciones">
+                        <a class="btn btn-ver-detalle btn-sm me-2" asp-controller="Adopciones" asp-action="GetFormulario" asp-route-id="@item.Id">Leer Formulario</a>
+                        @if (!item.Revisado)
+                        {
+                            <button type="button" class="btn btn-outline-success btn-sm marcar-revisado" data-id="@item.Id">
+                                Marcar como Revisado
+                            </button>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll(".marcar-revisado").forEach(function (button) {
+            button.addEventListener("click", function (event) {
+                event.preventDefault(); // Evita redirecciones si está dentro de un <form>
+                const id = this.getAttribute("data-id");
+
+                $.ajax({
+                    url: '/Adopciones/MarcarComoRevisado',
+                    type: 'POST',
+                    data: { id: id },
+                    headers: {
+                        'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            alert(response.message);
+                            button.remove();
+
+                            // Busca el <tr> con el id único
+                            const fila = document.getElementById("formulario-" + id);
+                            if (fila) {
+                                fila.classList.remove("no-revisado");
+                                fila.classList.add("revisado");
+
+                                // Esto es opcional pero fuerza a que el navegador actualice la vista
+                                void fila.offsetWidth;
+                            }
+                        } else {
+                            alert("No se pudo marcar como revisado.");
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        alert("Ocurrió un error al marcar como revisado.");
+                        console.error(error);
+                    }
+                });
+            });
+        });
+    });
+</script>

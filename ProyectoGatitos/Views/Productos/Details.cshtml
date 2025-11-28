@@ -1,0 +1,313 @@
+﻿@model ProyectoGatitos.Models.Producto
+@{
+    ViewData["Title"] = "Detalles del Producto";
+    string whatsappNumber = "5491127996770";
+    string message = $"¡Hola! Estoy interesado en el producto: {Model.Nombre} (${Model.Precio.ToString("N2")}). ¿Podrías darme más información?";
+    string whatsappUrl = $"https://wa.me/{whatsappNumber}?text={Uri.EscapeDataString(message)}";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm" style="border-radius: 12px; background-color: #fce9ef; border: 1px solid #f0c0d1;">
+                <div class="row g-0">
+                    <!-- Galería de fotos del producto -->
+                    <div class="col-md-5 p-4">
+                        <div class="photo-gallery" data-id="@Model.Id">
+                            @if (Model.Fotos != null && Model.Fotos.Any())
+                            {
+                                <div class="gallery-container" id="gallery-container-@Model.Id">
+                                    @foreach (var foto in Model.Fotos)
+                                    {
+                                        <img src="@foto" alt="Foto del producto @Model.Nombre"
+                                             class="gallery-image img-fluid rounded"
+                                             style="max-height: 300px; object-fit: contain;" />
+                                    }
+                                </div>
+                                @if (Model.Fotos.Count() > 1)
+                                {
+                                    <div class="gallery-nav">
+                                        <button class="nav-arrow prev" onclick="scrollGallery('@Model.Id', -1)">❮</button>
+                                        <button class="nav-arrow next" onclick="scrollGallery('@Model.Id', 1)">❯</button>
+                                    </div>
+                                }
+                            }
+                            else
+                            {
+                                <div class="text-center p-4" style="color: #e67297;">
+                                    <i class="bi bi-image" style="font-size: 3rem;"></i>
+                                    <p class="mt-2">Sin imagen disponible</p>
+                                </div>
+                            }
+                        </div>
+                    </div>
+
+                    <!-- Detalles del producto -->
+                    <div class="col-md-7 p-4">
+                        <h2 class="mb-3" style="color: #2c3e50; font-weight: 600;">@Model.Nombre</h2>
+
+                        <div class="d-flex align-items-center mb-3">
+                            <span class="badge bg-@(Model.EnStock ? "success" : "danger") py-2 px-3">
+                                @(Model.EnStock ? "Disponible" : "Sin stock")
+                            </span>
+                            <h4 class="mb-0 ms-auto" style="color: #2c3e50; font-weight: 700;">
+                                $@Model.Precio.ToString("N2", System.Globalization.CultureInfo.GetCultureInfo("es-AR"))
+                            </h4>
+                        </div>
+
+                        @if (!string.IsNullOrEmpty(Model.Descripcion))
+                        {
+                            <div class="mt-4">
+                                <h5 style="color: #2c3e50; font-weight: 500;">Descripción</h5>
+                                <p class="text-muted" style="line-height: 1.6;">@Model.Descripcion</p>
+                            </div>
+                        }
+
+                        <div class="mt-4 pt-3 border-top" style="border-color: #f0c0d1 !important;">
+                            <div class="d-flex gap-2 mb-2">
+                                @if (Model.EnStock)
+                                {
+                                    <a href="@whatsappUrl" class="btn flex-grow-1"
+                                       style="background-color: #198754; color: white;"
+                                       target="_blank">
+                                        <i class="bi bi-whatsapp me-2"></i>Comprar
+                                    </a>
+                                }
+                                <a asp-action="Index" class="btn btn-outline-secondary">
+                                    <i class="bi bi-arrow-left me-2"></i>Volver
+                                </a>
+                            </div>
+
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <div class="d-flex flex-wrap gap-2 mt-2">
+                                    <a asp-action="Edit" asp-route-id="@Model.Id"
+                                       class="btn btn-sm" style="background-color: #2c3e50; color: white;">
+                                        <i class="bi bi-pencil me-1"></i>Editar
+                                    </a>
+
+                                    <form asp-action="CambiarEstadoStock" asp-route-id="@Model.Id" method="post"
+                                          onsubmit="return confirm('¿Cambiar estado de stock?');"
+                                          class="d-inline">
+                                        <button type="submit" class="btn btn-sm btn-warning">
+                                            <i class="bi bi-arrow-repeat me-1"></i>@(Model.EnStock ? "Quitar Stock" : "Reponer Stock")
+                                        </button>
+                                    </form>
+
+                                    <form asp-action="DeleteConfirmed" asp-route-id="@Model.Id" method="post"
+                                          onsubmit="return confirm('¿Eliminar permanentemente?');"
+                                          class="d-inline">
+                                        <button type="submit" class="btn btn-sm btn-danger">
+                                            <i class="bi bi-trash me-1"></i>Eliminar
+                                        </button>
+                                    </form>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .badge {
+        border-radius: 8px;
+        font-size: 0.9rem;
+    }
+
+    .btn {
+        transition: all 0.2s;
+    }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+    .btn-sm {
+        padding: 0.35rem 0.75rem;
+    }
+
+    .photo-gallery {
+        position: relative;
+        width: 100%;
+        height: 300px;
+        overflow: hidden;
+    }
+
+    .gallery-container {
+        display: flex;
+        transition: transform 0.3s ease;
+        height: 100%;
+    }
+
+    .gallery-image {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        flex-shrink: 0;
+    }
+
+    .gallery-nav {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        pointer-events: none;
+    }
+
+    .nav-arrow {
+        background-color: rgba(114, 158, 110, 0.7);
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        cursor: pointer;
+        font-size: 16px;
+        border-radius: 5%;
+        pointer-events: auto;
+        transition: background-color 0.3s;
+        z-index: 1;
+    }
+
+        .nav-arrow:hover {
+            background-color: rgba(74, 112, 71, 1);
+        }
+
+        .nav-arrow.prev {
+            margin-left: 5px;
+        }
+
+        .nav-arrow.next {
+            margin-right: 5px;
+        }
+
+        .nav-arrow.hidden {
+            visibility: hidden;
+        }
+
+    @@media (max-width: 768px) {
+        .card {
+            flex-direction: column !important;
+        }
+
+        .col-md-5, .col-md-7 {
+            width: 100% !important;
+            max-width: 100% !important;
+        }
+
+        .col-md-5 {
+            padding-bottom: 0 !important;
+        }
+
+        .photo-gallery {
+            height: 250px;
+        }
+
+        .d-flex.align-items-center.mb-3 {
+            flex-direction: column;
+            align-items: flex-start !important;
+        }
+
+        .mb-0.ms-auto {
+            margin-left: 0 !important;
+            margin-top: 10px;
+        }
+
+        .btn {
+            width: 100%;
+            margin-bottom: 8px;
+        }
+
+        .d-flex.gap-2.mb-2 {
+            flex-direction: column;
+        }
+    }
+
+    @@media (max-width: 576px) {
+        .container {
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+
+        h2 {
+            font-size: 1.5rem !important;
+        }
+
+        h4 {
+            font-size: 1.25rem !important;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem !important;
+        }
+    }
+</style>
+
+@section Scripts {
+    <script>
+        // FUNCIONES SCROLL DE IMÁGENES
+        function scrollGallery(productoId, direction) {
+            const gallery = document.querySelector(`.photo-gallery[data-id="${productoId}"]`);
+            const container = document.getElementById(`gallery-container-${productoId}`);
+            const images = container.querySelectorAll('.gallery-image');
+            const imageWidth = images[0].offsetWidth;
+
+            const currentScroll = container.style.transform ?
+                parseInt(container.style.transform.split('(')[1].split('px')[0]) || 0 : 0;
+
+            let newScroll = currentScroll + (imageWidth * direction * -1);
+            const maxScroll = (images.length - 1) * imageWidth * -1;
+
+            // Limitar el scroll
+            newScroll = Math.min(0, Math.max(maxScroll, newScroll));
+
+            container.style.transform = `translateX(${newScroll}px)`;
+
+            // Actualizar flechas
+            updateArrows(productoId, newScroll, maxScroll);
+        }
+
+        function updateArrows(productoId, currentScroll, maxScroll) {
+            const gallery = document.querySelector(`.photo-gallery[data-id="${productoId}"]`);
+            const prevArrow = gallery.querySelector('.nav-arrow.prev');
+            const nextArrow = gallery.querySelector('.nav-arrow.next');
+
+            // Si no se pasan los valores, calcularlos
+            if (currentScroll === undefined || maxScroll === undefined) {
+                const container = document.getElementById(`gallery-container-${productoId}`);
+                const images = container.querySelectorAll('.gallery-image');
+                const imageWidth = images[0].offsetWidth;
+                currentScroll = container.style.transform ?
+                    parseInt(container.style.transform.split('(')[1].split('px')[0]) || 0 : 0;
+                maxScroll = (images.length - 1) * imageWidth * -1;
+            }
+
+            // Mostrar/ocultar flechas según la posición
+            if (currentScroll >= 0) {
+                prevArrow.classList.add('hidden');
+            } else {
+                prevArrow.classList.remove('hidden');
+            }
+
+            if (currentScroll <= maxScroll) {
+                nextArrow.classList.add('hidden');
+            } else {
+                nextArrow.classList.remove('hidden');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.photo-gallery').forEach(gallery => {
+                const productoId = gallery.getAttribute('data-id');
+                updateArrows(productoId);
+            });
+        });
+    </script>
+}

@@ -1,0 +1,341 @@
+﻿@model ProyectoGatitos.Models.Formulario
+
+@{
+    ViewData["Title"] = "Formulario de Adopción - Proyecto Gatitos";
+}
+
+<style>
+    body {
+        background-color: #f9f9f9;
+        color: #333;
+    }
+
+    h2, h4 {
+        color: #4a4a4a;
+        margin-bottom: 1.5rem;
+    }
+
+    p {
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .control-label {
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        display: block;
+        color: #555;
+    }
+
+    .form-control {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0.75rem;
+        font-size: 1rem;
+        width: 100%;
+        box-sizing: border-box;
+        transition: border-color 0.3s ease;
+    }
+
+    .form-control:focus {
+        border-color: #ff6f61;
+        outline: none;
+        box-shadow: 0 0 5px rgba(255, 111, 97, 0.3);
+    }
+
+    textarea.form-control {
+        resize: vertical;
+        min-height: 100px;
+    }
+
+    select.form-control {
+        appearance: none;
+        background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12"><path fill="%23555" d="M10.293 3.293L6 7.586 1.707 3.293A1 1 0 00.293 4.707l5 5a1 1 0 001.414 0l5-5a1 1 0 10-1.414-1.414z"/></svg>') no-repeat right 0.75rem center;
+        background-size: 12px;
+    }
+
+    .checkbox-group {
+        margin-bottom: 1rem;
+    }
+
+    .checkbox-group label {
+        margin-right: 1rem;
+        margin-bottom: 0.5rem;
+        display: inline-block;
+    }
+
+    .btn-success {
+        background-color: #ff6f61;
+        border: none;
+        padding: 0.75rem 2rem;
+        font-size: 1.1rem;
+        border-radius: 8px;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-success:hover {
+        background-color: #e65b50;
+    }
+
+    .text-danger {
+        font-size: 0.9rem;
+        margin-top: 0.25rem;
+        display: block;
+    }
+
+    .form-section {
+        background: #fff;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        margin-bottom: 2rem;
+    }
+
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 2rem;
+    }
+
+    @@media (max-width: 768px) {
+        .container {
+            padding: 1rem;
+        }
+
+        .form-section {
+            padding: 1.5rem;
+        }
+    }
+</style>
+
+<div class="container">
+    <h2>Proyecto Gatitos</h2>
+    <p>Hola! Cómo estás? Soy Rocío de Proyecto Gatitos. Primero que nada gracias por llegar hasta acá. Una vez que mandes tu formulario con todos los datos requeridos y si cumplís con ellos me estaré comunicando con vos.</p>
+
+    <h4>Para tener en cuenta a la hora de adoptar</h4>
+    <p>Un gato puede vivir hasta más de 10 años los cuales conllevan atención veterinaria, vacunas anuales, buena alimentación y mucho más.</p>
+
+    <form asp-action="EnviarFormulario" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <!-- Información del adoptante -->
+        <div class="form-section">
+            <h4>Información del adoptante</h4>
+            <div class="form-group">
+                <label asp-for="Nombre" class="control-label">Nombre</label>
+                <input asp-for="Nombre" class="form-control" />
+                <span asp-validation-for="Nombre" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Apellido" class="control-label">Apellido</label>
+                <input asp-for="Apellido" class="form-control" />
+                <span asp-validation-for="Apellido" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NumeroContacto" class="control-label">Número de contacto</label>
+                <input asp-for="NumeroContacto" class="form-control" />
+                <span asp-validation-for="NumeroContacto" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FechaNacimiento" class="control-label">Fecha de nacimiento</label>
+                <input asp-for="FechaNacimiento" type="date" class="form-control" />
+                <span asp-validation-for="FechaNacimiento" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label">Email</label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MotivoAdopcion" class="control-label">¿Por qué elegiste adoptar? ¿Estás interesad@@ en adoptar alguno en especial?</label>
+                <textarea asp-for="MotivoAdopcion" class="form-control" rows="4"></textarea>
+                <span asp-validation-for="MotivoAdopcion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RedesSociales" class="control-label">Instagram PERSONAL o Facebook</label>
+                <input asp-for="RedesSociales" class="form-control" />
+                <span asp-validation-for="RedesSociales" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Direccion" class="control-label">Dirección</label>
+                <input asp-for="Direccion" class="form-control" />
+                <span asp-validation-for="Direccion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Localidad" class="control-label">Localidad</label>
+                <input asp-for="Localidad" class="form-control" />
+                <span asp-validation-for="Localidad" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Provincia" class="control-label">Provincia</label>
+                <input asp-for="Provincia" class="form-control" />
+                <span asp-validation-for="Provincia" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CodigoPostal" class="control-label">Código Postal</label>
+                <input asp-for="CodigoPostal" class="form-control" />
+                <span asp-validation-for="CodigoPostal" class="text-danger"></span>
+            </div>
+        </div>
+
+        <!-- Vivienda -->
+        <div class="form-section">
+            <h4>¿Cómo es tu vivienda?</h4>
+            <div class="form-group">
+                <label asp-for="TipoVivienda" class="control-label">Tipo de vivienda</label>
+                <select asp-for="TipoVivienda" class="form-control">
+                    <option value="">Seleccioná una opción</option>
+                    <option value="Casa">Casa</option>
+                    <option value="Departamento">Departamento</option>
+                    <option value="Ph">Ph</option>
+                    <option value="Otro">Otro</option>
+                </select>
+                <span asp-validation-for="TipoVivienda" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Tu hogar tiene...</label>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" name="CaracteristicasHogar" value="Balcón" @(Model?.CaracteristicasHogar?.Contains("Balcón") == true ? "checked" : "") /> Balcón</label><br />
+                    <label><input type="checkbox" name="CaracteristicasHogar" value="Ventana" @(Model?.CaracteristicasHogar?.Contains("Ventana") == true ? "checked" : "") /> Ventana</label><br />
+                    <label><input type="checkbox" name="CaracteristicasHogar" value="Patio" @(Model?.CaracteristicasHogar?.Contains("Patio") == true ? "checked" : "") /> Patio</label><br />
+                    <label><input type="checkbox" name="CaracteristicasHogar" value="Jardín" @(Model?.CaracteristicasHogar?.Contains("Jardín") == true ? "checked" : "") /> Jardín</label><br />
+                    <label><input type="checkbox" name="CaracteristicasHogar" value="Terraza" @(Model?.CaracteristicasHogar?.Contains("Terraza") == true ? "checked" : "") /> Terraza</label><br />
+                    <label><input type="checkbox" name="CaracteristicasHogar" value="No tengo" @(Model?.CaracteristicasHogar?.Contains("No tengo") == true ? "checked" : "") /> No tengo</label>
+                </div>
+                <span asp-validation-for="CaracteristicasHogar" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RedesProteccion" class="control-label">En caso de tener ventanas y/o balcones, ¿posee redes de protección o mosquiteros?</label>
+                <select asp-for="RedesProteccion" class="form-control">
+                    <option value="">Seleccioná una opción</option>
+                    <option value="Sí, ya las tengo">Sí, ya las tengo</option>
+                    <option value="Aún no, pero pienso ponerlas">Aún no, pero pienso ponerlas</option>
+                    <option value="No, pero estoy dispuest@@ a colocarlas">No, pero estoy dispuest@@ a colocarlas</option>
+                    <option value="No me parece que sean necesarias">No me parece que sean necesarias</option>
+                </select>
+                <span asp-validation-for="RedesProteccion" class="text-danger"></span>
+            </div>
+        </div>
+
+        <!-- Convivencia -->
+        <div class="form-section">
+            <h4>Convivencia</h4>
+            <div class="form-group">
+                <label asp-for="AprobacionFamiliar" class="control-label">¿Todos en tu familia quieren adoptar?</label>
+                <select asp-for="AprobacionFamiliar" class="form-control">
+                    <option value="">Seleccioná una opción</option>
+                    <option value="Sí">Sí</option>
+                    <option value="No">No</option>
+                    <option value="Aún no lo hablé">Aún no lo hablé</option>
+                </select>
+                <span asp-validation-for="AprobacionFamiliar" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="QueHariasSiTeMudás" class="control-label">¿Qué harías en caso de mudarte?</label>
+                <select asp-for="QueHariasSiTeMudás" class="form-control">
+                    <option value="">Seleccioná una opción</option>
+                    <option value="Llevarmelo conmigo en un lugar donde acepten mascotas">Llevarmelo conmigo en un lugar donde acepten mascotas</option>
+                    <option value="Regalarlo">Regalarlo</option>
+                    <option value="Devolverlo a Proyecto Gatitos">Devolverlo a Proyecto Gatitos</option>
+                </select>
+                <span asp-validation-for="QueHariasSiTeMudás" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ConQuienVive" class="control-label">Contame con quién vivís y sus edades o si vivís sol@@</label>
+                <textarea asp-for="ConQuienVive" class="form-control" rows="4"></textarea>
+                <span asp-validation-for="ConQuienVive" class="text-danger"></span>
+            </div>
+        </div>
+
+        <!-- Mascotas -->
+        <div class="form-section">
+            <h4>Mascotas</h4>
+            <div class="form-group">
+                <label asp-for="TieneMascotas" class="control-label">¿Tenés otras mascotas?</label>
+                <select asp-for="TieneMascotas" class="form-control">
+                    <option value="">Seleccioná una opción</option>
+                    <option value="Sí">Sí</option>
+                    <option value="No">No</option>
+                </select>
+                <span asp-validation-for="TieneMascotas" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DetallesMascotas" class="control-label">Comentame la edad y nombre de tus mascotas y en caso de que no tengas el porqué</label>
+                <textarea asp-for="DetallesMascotas" class="form-control" rows="4"></textarea>
+                <span asp-validation-for="DetallesMascotas" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OpinionEsterilizacion" class="control-label">¿Planeás castrar a tu gat@@? ¿Qué opinás sobre la esterilización?</label>
+                <textarea asp-for="OpinionEsterilizacion" class="form-control" rows="4"></textarea>
+                <span asp-validation-for="OpinionEsterilizacion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MascotasCastradas" class="control-label">¿Tus mascotas están castradas? En caso de que no lo estén contame el porqué</label>
+                <textarea asp-for="MascotasCastradas" class="form-control" rows="4"></textarea>
+                <span asp-validation-for="MascotasCastradas" class="text-danger"></span>
+            </div>
+        </div>
+
+        <!-- Adaptación y Cuidados -->
+        <div class="form-section">
+            <h4>Adaptación y Cuidados</h4>
+            <div class="form-group">
+                <label asp-for="MedidasAdaptacion" class="control-label">En caso de que le cueste adaptarse, ¿qué medidas tomarías?</label>
+                <textarea asp-for="MedidasAdaptacion" class="form-control" rows="4"></textarea>
+                <span asp-validation-for="MedidasAdaptacion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RiesgoFiestas" class="control-label">Llegadas las fiestas, ¿conocés los riesgos que implican el uso de pirotecnia? ¿Pasás las fiestas en otro lugar? ¿Dónde dejás a tu mascota?</label>
+                <textarea asp-for="RiesgoFiestas" class="form-control" rows="4"></textarea>
+                <span asp-validation-for="RiesgoFiestas" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MarcaAlimento" class="control-label">¿Qué alimento balanceado le darías? Indica la marca</label>
+                <input asp-for="MarcaAlimento" class="form-control" />
+                <span asp-validation-for="MarcaAlimento" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ImportanciaAnimal" class="control-label">¿Cuán importante es para vos compartir tu vida con un animal?</label>
+                <textarea asp-for="ImportanciaAnimal" class="form-control" rows="4"></textarea>
+                <span asp-validation-for="ImportanciaAnimal" class="text-danger"></span>
+            </div>
+        </div>
+
+        <!-- Traslado -->
+        <div class="form-section">
+            <h4>Traslado</h4>
+            <div class="form-group">
+                <label asp-for="DispuestoTraslado" class="control-label">El día de la adopción, el traslado puede ser con un remis, Uber, Didi o algún traslado mascotero, cuyo valor depende de la distancia desde el hogar de tránsito hasta el nuevo hogar. ¿Estarías dispuesto a abonarlo?</label>
+                <select asp-for="DispuestoTraslado" class="form-control">
+                    <option value="">Seleccioná una opción</option>
+                    <option value="Sí">Sí</option>
+                    <option value="No">No</option>
+                </select>
+                <span asp-validation-for="DispuestoTraslado" class="text-danger"></span>
+            </div>
+        </div>
+
+        <!-- Comentarios adicionales -->
+        <div class="form-section">
+            <h4>Comentarios adicionales</h4>
+            <div class="form-group">
+                <label asp-for="ComentariosAdicionales" class="control-label">¿Querés agregar algo más? (Si no lo hacés, escribí 'No')</label>
+                <textarea asp-for="ComentariosAdicionales" class="form-control" rows="4"></textarea>
+                <span asp-validation-for="ComentariosAdicionales" class="text-danger"></span>
+            </div>
+        </div>
+
+        <!-- Botón de envío -->
+        <div class="form-group">
+            <input type="submit" value="Enviar" class="btn btn-success" />
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

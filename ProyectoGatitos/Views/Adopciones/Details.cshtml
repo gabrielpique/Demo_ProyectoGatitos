@@ -1,0 +1,132 @@
+﻿@model ProyectoGatitos.Models.Adopcion
+
+@{
+    ViewBag.Title = "Detalle de " + Model.Nombre;
+}
+
+<div class="adopcion-detalle-container">
+    <h2 class="nombre">@Model.Nombre</h2>
+
+    <div class="galeria">
+        @if (Model.Fotos != null && Model.Fotos.Any())
+        {
+            foreach (var foto in Model.Fotos)
+            {
+                <img src="@foto" alt="Foto de @Model.Nombre" class="imagen-galeria" />
+            }
+        }
+        else
+        {
+            <p>No hay fotos disponibles 😿</p>
+        }
+    </div>
+
+    <div class="descripcion">
+        <h4 class="text-center">Conocé a @Model.Nombre</h4>
+        <p>@Model.Descripcion</p>
+    </div>
+    @if (!Model.Adoptado)
+    {
+        <a href="/requisitos"
+           class="action-link">Adoptar</a>
+    }
+    
+</div>
+
+<style>
+    :root {
+        --primary: #3D5A3D; 
+        --primary-light: #8BC187; 
+        --accent: #F7B95A; 
+        --text: #222222; 
+        --text-light: #444444;
+        --bg: #f2f2f2; 
+        --white: #ffffff;
+        /* --rose: #e88da5; */ 
+        --rose: #e67297;
+    }
+    .action-link {
+        display: inline-block;
+        padding: 0.6rem 1.5rem;
+        background-color: var(--primary);
+        color: white;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        margin: 1rem 0.5rem;
+    }
+
+        .action-link:hover {
+            background-color: var(--primary-light);
+            transform: scale(1.05);
+            color: white;
+        }
+    .adopcion-detalle-container {
+        max-width: 800px;
+        margin: 40px auto;
+        padding: 20px;
+        background-color: #FAE7DA; 
+        border-radius: 15px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        text-align: center;
+    }
+
+    
+
+
+    .nombre {
+        font-size: 2em;
+        margin-bottom: 20px;
+    }
+
+    .galeria {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+
+    .imagen-galeria {
+        width: 200px;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 10px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .descripcion {
+        text-align: left;
+        padding: 0 20px;
+    }
+
+    .descripcion h4 {
+        margin-bottom: 10px;
+    }
+
+        .descripcion p {
+            font-size: 1.1em;
+            line-height: 1.6;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+    @@media (max-width: 768px) {
+        .imagen-galeria {
+            width: 100%;
+            height: auto;
+        }
+
+        .descripcion {
+            text-align: center;
+            padding: 0;
+        }
+
+        .adopcion-detalle-container {
+            margin: 20px 10px;
+            padding: 15px;
+        }
+
+    }
+</style>

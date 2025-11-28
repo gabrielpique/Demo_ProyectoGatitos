@@ -1,0 +1,95 @@
+﻿@model ProyectoGatitos.Models.Adopcion
+
+@{
+    ViewData["Title"] = "Confirmar Eliminación";
+}
+
+<div class="main-container">
+    <div class="hero-section">
+        <h1>@ViewData["Title"]</h1>
+        <p class="subtitle">⚠️ Acción irreversible</p>
+    </div>
+
+    <div class="confirmation-box">
+        <h3>¿Estás seguro de eliminar la adopción de <strong>@Model.Nombre</strong>?</h3>
+
+        <div class="cat-info">
+            @if (Model.Fotos != null && Model.Fotos.Any())
+            {
+                <img src="@Model.Fotos.First()" alt="Foto de @Model.Nombre" class="cat-image" />
+            }
+            <p><strong>Edad:</strong> @Model.Edad</p>
+            <p><strong>Sexo:</strong> @Model.Sexo</p>
+        </div>
+
+        <form asp-action="DeleteConfirmed" method="post">
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" name="origen" value="@ViewBag.Origen" />
+            <div class="form-actions">
+                <button type="submit" class="button danger-btn">Confirmar Eliminación</button>
+                <a href="@Url.Action("Index", new { origen = ViewBag.Origen })" class="button cancel-btn">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Styles {
+    <style>
+        .confirmation-box {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            max-width: 600px;
+            margin: 2rem auto;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .cat-info {
+            margin: 1.5rem 0;
+        }
+
+        .cat-image {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .button {
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .danger-btn {
+            background-color: #f44336;
+            color: white;
+        }
+
+            .danger-btn:hover {
+                background-color: #d32f2f;
+            }
+
+        .cancel-btn {
+            background-color: #e0e0e0;
+            color: #333;
+        }
+
+            .cancel-btn:hover {
+                background-color: #bdbdbd;
+            }
+    </style>
+}

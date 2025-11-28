@@ -1,0 +1,191 @@
+﻿@model ProyectoGatitos.Models.Formulario
+
+@{
+    ViewData["Title"] = "Detalles del Formulario - Proyecto Gatitos";
+}
+
+<style>
+    body {
+        background-color: #fdfdfd;
+        color: #333;
+    }
+
+    .formulario-detalle {
+        max-width: 800px;
+        margin: 40px auto;
+        padding: 0 20px;
+        line-height: 1.6;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+
+    h2 {
+        font-size: 28px;
+        margin-bottom: 10px;
+        color: #222;
+    }
+
+    .text-muted {
+        font-size: 14px;
+        color: #888;
+        margin-bottom: 30px;
+    }
+
+    .pregunta {
+        font-weight: 600;
+        font-size: 16px;
+        margin-top: 15px;
+        margin-bottom: 4px;
+    }
+
+    .respuesta {
+        font-size: 15px;
+        padding-left: 10px;
+        margin-bottom: 10px;
+    }
+
+    .separador {
+        border: none;
+        border-top: 1px solid #ccc;
+        margin: 20px 0;
+    }
+
+
+    .text-center {
+        text-align: center;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        font-size: 15px;
+        text-decoration: none;
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+    }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+</style>
+
+<div class="formulario-detalle">
+    <h2>Formulario de @Model.Nombre @Model.Apellido</h2>
+    <p class="text-muted">Enviado el @Model.FechaSolicitud.ToString("dd/MM/yyyy")</p>
+
+    <div class="pregunta">Nombre</div>
+    <div class="respuesta">@Model.Nombre</div>
+    <div class="separador"></div>
+
+    <div class="pregunta">Apellido</div>
+    <div class="respuesta">@Model.Apellido</div>
+    <div class="separador"></div>
+
+    <div class="pregunta">Número de contacto</div>
+    <div class="respuesta">@Model.NumeroContacto</div>
+    <div class="separador"></div>
+
+    <div class="pregunta">Fecha de nacimiento</div>
+    <div class="respuesta">@Model.FechaNacimiento.ToShortDateString()</div>
+    <div class="separador"></div>
+
+    <div class="pregunta">Email</div>
+    <div class="respuesta">@Model.Email</div>
+    <div class="separador"></div>
+
+    <div class="pregunta">¿Por qué elegiste adoptar? ¿Estás interesado/a en adoptar alguno en especial?</div>
+    <div class="respuesta">@Model.MotivoAdopcion</div>
+    <div class="separador"></div>
+
+    <div class="pregunta">Instagram personal o Facebook</div>
+    <div class="respuesta">@Model.RedesSociales</div>
+    <div class="separador"></div>
+
+    <div class="pregunta">Dirección</div>
+    <div class="respuesta">@Model.Direccion</div>
+    <div class="separador"></div>
+
+    <div class="pregunta">Localidad</div>
+    <div class="respuesta">@Model.Localidad</div>
+    <div class="separador"></div>
+
+    <div class="pregunta">Provincia</div>
+    <div class="respuesta">@Model.Provincia</div>
+    <div class="separador"></div>
+
+    <div class="pregunta">Código Postal</div>
+    <div class="respuesta">@Model.CodigoPostal</div>
+    <div class="separador"></div>
+
+    <div class="pregunta">Tipo de Vivienda</div>
+    <div class="respuesta">@Model.TipoVivienda</div>
+    <div class="separador"></div>
+
+    <div class="pregunta">Tu hogar tiene...</div>
+    <div class="respuesta">@string.Join(", ", Model.CaracteristicasHogar)</div>
+    <div class="separador"></div>
+
+    <div class="pregunta">En caso de tener ventanas y/o balcones, ¿posee redes de protección o mosquiteros?</div>
+    <div class="respuesta">@Model.RedesProteccion</div>
+    <div class="separador"></div>
+
+    <div class="pregunta">¿Todos en tu familia quieren adoptar?</div>
+    <div class="respuesta">@Model.AprobacionFamiliar</div>
+    <div class="separador"></div>
+
+    <div class="pregunta">¿Qué harías en caso de mudarte?</div>
+    <div class="respuesta">@Model.QueHariasSiTeMudás</div>
+    <div class="separador"></div>
+
+    <div class="pregunta">Contame con quién vivís y sus edades o si vivís solo/a</div>
+    <div class="respuesta">@Model.ConQuienVive</div>
+    <div class="separador"></div>
+
+    <div class="pregunta">¿Tenés otras mascotas?</div>
+    <div class="respuesta">@Model.TieneMascotas</div>
+    <div class="separador"></div>
+
+    <div class="pregunta">Comentame la edad y nombre de tus mascotas y en caso de que no tengas el porqué</div>
+    <div class="respuesta">@Model.DetallesMascotas</div>
+    <div class="separador"></div>
+
+    <div class="pregunta">¿Planeás castrar a tu gato/a? ¿Qué opinás sobre la esterilización?</div>
+    <div class="respuesta">@Model.OpinionEsterilizacion</div>
+    <div class="separador"></div>
+
+    <div class="pregunta">¿Tus mascotas están castradas? En caso de que no lo estén contame el porqué</div>
+    <div class="respuesta">@Model.MascotasCastradas</div>
+    <div class="separador"></div>
+
+    <div class="pregunta">En caso de que le cueste adaptarse, ¿qué medidas tomarías?</div>
+    <div class="respuesta">@Model.MedidasAdaptacion</div>
+    <div class="separador"></div>
+
+    <div class="pregunta">Llegadas las fiestas, ¿conocés los riesgos que implican el uso de pirotecnia? ¿Pasás las fiestas en otro lugar? ¿Dónde dejás a tu mascota?</div>
+    <div class="respuesta">@Model.RiesgoFiestas</div>
+    <div class="separador"></div>
+
+    <div class="pregunta">¿Qué alimento balanceado le darías? Indica la marca</div>
+    <div class="respuesta">@Model.MarcaAlimento</div>
+    <div class="separador"></div>
+
+    <div class="pregunta">¿Cuán importante es para vos compartir tu vida con un animal?</div>
+    <div class="respuesta">@Model.ImportanciaAnimal</div>
+    <div class="separador"></div>
+
+    <div class="pregunta">¿Estarías dispuesto a abonar el traslado?</div>
+    <div class="respuesta">@Model.DispuestoTraslado</div>
+    <div class="separador"></div>
+
+    <div class="pregunta">¿Querés agregar algo más?</div>
+    <div class="respuesta">@Model.ComentariosAdicionales</div>
+    <div class="separador"></div>
+
+    <div class="text-center mt-4">
+        <a href="/formularios" class="btn btn-secondary">Volver al listado</a>
+    </div>
+</div>

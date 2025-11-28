@@ -1,0 +1,157 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Proyecto Gatitos</title>
+    <meta name="description" content="¿Querés adoptar un gato? En Proyecto Gatitos rescatamos gatitos y cuidamos de ellos hasta que consigan una familia. ¡Conocé a nuestros gatos en adopción hoy!">
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-N4QSY03YD5"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-N4QSY03YD5');
+    </script>
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="@(ViewData["Title"] ?? "Proyecto Gatitos")" />
+    <meta property="og:description" content="¡Adoptá un gatito y cambiale la vida! Proyecto Gatitos rescata y encuentra hogares para gatos en necesidad." />
+    <meta property="og:image" content="@Url.Content("~/images/logo-proyectogatitos.jpg")" />
+    <meta property="og:image:alt" content="Logo de Proyecto Gatitos" />
+    <meta property="og:url" content="@($"{Context.Request.Scheme}://{Context.Request.Host}{Context.Request.Path}{Context.Request.QueryString}")" />
+    <meta property="og:type" content="website" />
+    <meta property="og:type" content="website" />
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="@(ViewData["Title"] ?? "Proyecto Gatitos")" />
+    <meta name="twitter:description" content="¡Adoptá un gatito y cambiale la vida! Proyecto Gatitos rescata y encuentra hogares para gatos en necesidad." />
+    <meta name="twitter:image" content="@Url.Content("~/images/logo-proyectogatitos.jpg")" />
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+          crossorigin="anonymous">
+
+    <!-- Bootstrap JS (Bundle con Popper) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/ProyectoGatitos.styles.css" asp-append-version="true" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Agregar el CSS de Toastr -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
+
+    <!-- Agregar el JS de Toastr -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+    @RenderSection("Styles", required: false) <!-- Para estilos específicos de vista -->
+</head>
+<body class="site-body">
+    <header class="site-header">
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">🐾 Proyecto Gatitos</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Adopciones" asp-action="AdopcionesPendientes">Adopciones</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Adopciones" asp-action="AdopcionesRealizadas">Adoptados</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Donar">Donar</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Productos" asp-action="Index">Tienda</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Adopciones" asp-action="EnviarFormulario">Formulario Adopción</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="RefugiosExternos">Refugios Externos</a>
+                        </li>
+
+                        @* <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="AnimalesPerdidos" asp-action="Index">Gatos Perdidos</a>
+                        </li> *@
+                        @* @if (!User.Identity.IsAuthenticated)
+                        {
+                        <!-- Mostrar solo si NO está autenticado -->
+                        <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Login">Ingresar</a>
+                        </li>
+                        <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Register">Registrarse</a>
+                        </li>
+                        } *@
+
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Adopciones" asp-action="GetAllFormularios">Formularios</a>
+                            </li>
+                            <li class="nav-item">
+                                <form action="@Url.Action("Logout", "Account")" method="post">
+                                    @Html.AntiForgeryToken() 
+                                    <button type="submit" class="nav-link" style="background:none; border:none; color:#000;">
+                                        Cerrar Sesión
+                                    </button>
+                                </form>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main role="main" class="site-main">
+        <div class="logo-container">
+            <a href="@Url.Action("Index", "Home")">
+                <img src="/images/logo2.png" alt="Logo" class="logo">
+            </a>
+        </div>
+
+        <div class="container">
+            @RenderBody()
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-links">
+            <a href="/">Inicio</a>
+            <a href="/adoptar-gato">Gatos en Adopción</a>
+            <a href="/gatos-adoptados">Adoptados</a>
+            <a href="/donar">Donar</a>
+            <a href="/tienda">Tienda</a>
+            <a href="/formulario">Formulario Adopción</a>
+        </div>
+
+        <div class="footer-copy">
+            <p class="footer-proyecto">© @DateTime.Now.Year - <a href="https://www.instagram.com/proyectogatitos" target="_blank">Proyecto Gatitos</a></p>
+            <p class="footer-desarrollado">
+                Desarrollado por
+                <a href="https://www.instagram.com/gabipique_" target="_blank">Gabriel Piqué</a>
+            </p>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    @* <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script> *@
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

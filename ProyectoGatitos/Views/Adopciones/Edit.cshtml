@@ -1,0 +1,181 @@
+﻿@model ProyectoGatitos.Models.AdopcionDTOs.AdopcionDTO
+
+@{
+    ViewData["Title"] = "Editar Adopción";
+}
+
+<div class="form-container">
+    <h2>Editar Adopción</h2>
+    <form asp-action="Edit" method="post">
+        <input type="hidden" asp-for="Id" /> <!-- Campo oculto para el ID -->
+        <input type="hidden" name="origen" value="@ViewBag.Vista" />
+
+        <div class="form-group">
+            <label asp-for="Nombre">Nombre:</label>
+            <input asp-for="Nombre" class="form-input" />
+            <span asp-validation-for="Nombre" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Edad">Edad:</label>
+            <input asp-for="Edad" class="form-input" />
+            <span asp-validation-for="Edad" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label>Sexo:</label>
+            <div>
+                <input type="radio" asp-for="Sexo" value="Macho" id="sexoMacho" />
+                <label for="sexoMacho">Macho</label>
+            </div>
+            <div>
+                <input type="radio" asp-for="Sexo" value="Hembra" id="sexoHembra" />
+                <label for="sexoHembra">Hembra</label>
+            </div>
+            <span asp-validation-for="Sexo" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="CantidadGatos" class="control-label"></label>
+            <input asp-for="CantidadGatos" class="form-control" type="number" min="1" />
+            <small class="form-text text-warning">
+                ⚠️ Solo modificar en caso de que sea una adopción de 2 o más gatos.
+            </small>
+            <span asp-validation-for="CantidadGatos" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Descripcion">Descripción:</label>
+            <textarea asp-for="Descripcion" rows="4" class="form-input"></textarea>
+            <span asp-validation-for="Descripcion" class="text-danger"></span>
+        </div>
+
+        @if (Model.EsDeRefugio)
+        {
+            <div class="form-group">
+                <label asp-for="NombreRefugio">Nombre del refugio:</label>
+                <input asp-for="NombreRefugio" class="form-input" />
+                <span asp-validation-for="NombreRefugio" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ContactoRefugio">Contacto del refugio (Instagram, WhatsApp, etc):</label>
+                <input asp-for="ContactoRefugio" class="form-input" />
+                <span asp-validation-for="ContactoRefugio" class="text-danger"></span>
+            </div>
+            <input type="hidden" asp-for="EsDeRefugio" />
+
+        }
+
+        <button type="submit" class="button">Guardar Cambios</button>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+<style>
+    .form-container {
+        max-width: 500px;
+        margin: 100px auto 60px;
+        padding: 25px;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+        font-size: 1.8rem;
+        color: #4A7047;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    label {
+        display: block;
+        color: #4A7047;
+        font-weight: 500;
+        margin-bottom: 5px;
+    }
+
+    .form-input {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 1rem;
+        box-sizing: border-box;
+    }
+
+    textarea.form-input {
+        resize: vertical;
+        min-height: 80px;
+    }
+
+    .button {
+        width: 100%;
+        padding: 12px;
+        background-color: #A7D397;
+        color: #4A7047;
+        font-size: 1rem;
+        font-weight: 500;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+        .button:hover {
+            background-color: #8AB87C;
+        }
+
+    .text-danger {
+        color: #dc3545;
+        font-size: 0.85rem;
+    }
+
+    @@media (max-width: 768px) {
+        .form-container {
+            max-width: 90%;
+            margin: 80px auto 50px;
+            padding: 20px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+        }
+
+        .form-input {
+            font-size: 0.9rem;
+        }
+
+        .button {
+            font-size: 0.9rem;
+            padding: 10px;
+        }
+    }
+
+    @@media (max-width: 576px) {
+        .form-container {
+            max-width: 95%;
+            margin: 60px auto 40px;
+            padding: 15px;
+        }
+
+        h2 {
+            font-size: 1.3rem;
+        }
+
+        .form-input {
+            font-size: 0.85rem;
+        }
+
+        .button {
+            font-size: 0.85rem;
+            padding: 8px;
+        }
+    }
+</style>

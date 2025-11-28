@@ -1,0 +1,381 @@
+﻿@model IEnumerable<ProyectoGatitos.Models.AnimalPerdido>
+@using ProyectoGatitos.Models;
+@using ProyectoGatitos.Enums;
+@using System.Security.Claims
+
+@{
+    ViewData["Title"] = "Animales Perdidos/Encontrados";
+}
+
+@section Styles {
+    <style>
+        /* Contenedor principal */
+        .animales-container {
+            width: 100%;
+            padding: 20px 0;
+        }
+
+        .actions {
+            margin-bottom: 20px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            margin-right: 10px;
+        }
+
+            .button.lost {
+                background-color: #dc3545;
+            }
+
+            .button.found {
+                background-color: #17a2b8;
+            }
+
+            .button:hover {
+                opacity: 0.9;
+            }
+
+            .button.lost:hover {
+                background-color: #c82333;
+            }
+
+            .button.found:hover {
+                background-color: #138496;
+            }
+
+        /* Grid de tarjetas */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+            .card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            }
+
+        .card-header {
+            padding: 10px;
+            color: white;
+            font-weight: bold;
+            text-align: center;
+        }
+
+            .card-header.lost {
+                background-color: #dc3545;
+            }
+
+            .card-header.found {
+                background-color: #17a2b8;
+            }
+
+        .card-body {
+            padding: 15px;
+        }
+
+        .card h3 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .message {
+            color: #555;
+            margin: 10px 0;
+            font-style: italic;
+        }
+
+        .status {
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 20px;
+            display: inline-block;
+            margin: 10px 0;
+        }
+
+        .active {
+            color: #856404;
+            background-color: #fff3cd;
+        }
+
+        .resolved {
+            color: #155724;
+            background-color: #d4edda;
+        }
+
+        .contact-info {
+            margin: 10px 0;
+        }
+
+        .actions {
+            margin: 15px 0 10px;
+        }
+
+        .action-link {
+            margin: 0 5px;
+            color: #4A7047;
+            text-decoration: none;
+            font-size: 1.2em;
+        }
+
+        .button.resolve {
+            background-color: #28a745;
+            border: none;
+            padding: 8px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+            color: #fff;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+            width: 100%;
+        }
+
+            .button.resolve:hover {
+                background-color: #218838;
+            }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1050;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 25px;
+            margin: 10% auto;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .close {
+            position: absolute;
+            right: 15px;
+            top: 10px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            color: #333;
+        }
+
+        .modal-content h2 {
+            margin-top: 0;
+        }
+
+        .modal-content label {
+            display: block;
+            margin: 10px 0 5px;
+            text-align: left;
+        }
+
+        .modal-content input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        @@media (max-width: 768px) {
+            .modal-content {
+                margin: 20% auto;
+                width: 95%;
+            }
+        }
+    </style>
+}
+
+<div class="animales-container">
+    <h2>Animales Perdidos/Encontrados</h2>
+    <div class="actions">
+        <a href="@Url.Action("CreatePerdido", "AnimalesPerdidos")" class="button lost">Reportar Perdido</a>
+        <a href="@Url.Action("CreateEncontrado", "AnimalesPerdidos")" class="button found">Reportar Encontrado</a>
+    </div>
+
+    <div class="grid-container">
+        @foreach (var animal in Model)
+        {
+            <div class="card">
+                <div class="card-header @(animal.TipoPerdida == TipoPerdida.BuscadoPorDuenio ? "lost" : "found")">
+                    @(animal.TipoPerdida == TipoPerdida.BuscadoPorDuenio ? "🐾 Perdido" : "🏡 Encontrado")
+                </div>
+                <div class="card-body">
+                    <h3>@animal.Nombre</h3>
+                    <p>Publicado por @animal.UsuarioPublicador.Nombre @animal.UsuarioPublicador.Apellido</p>
+                    <p><strong>Fecha:</strong> @animal.FechaEnQueSePerdio.ToShortDateString()</p>
+                    <p><strong>Ubicación:</strong> @animal.Ubicacion</p>
+                    @if (!string.IsNullOrEmpty(animal.Mensaje))
+                    {
+                        <p class="message">@animal.Mensaje</p>
+                    }
+                    <div class="status @(animal.Recuperado ? "resolved" : "active")">
+                        @(animal.Recuperado ? "✅ Caso resuelto" : "🔍 Búsqueda activa")
+                    </div>
+
+                    <div class="actions">
+                        @if (User.Identity.IsAuthenticated && (User.IsInRole("Admin") || User.FindFirstValue(ClaimTypes.NameIdentifier) == animal.UsuarioPublicadorId))
+                        {
+                            <a href="@Url.Action("Edit", new { id = animal.Id })" class="action-link">✏️</a>
+                            <a href="#" class="action-link delete-btn"
+                               data-id="@animal.Id"
+                               data-name="@animal.Nombre">🗑️</a>
+                        }
+                    </div>
+
+                    @if (!animal.Recuperado && User.Identity.IsAuthenticated && (User.IsInRole("Admin") || User.FindFirstValue(ClaimTypes.NameIdentifier) == animal.UsuarioPublicadorId))
+                    {
+                        <form asp-action="YaSeEncontro" method="post" class="resolve-form">
+                            <input type="hidden" name="id" value="@animal.Id" />
+                            <button type="submit" class="button resolve">Marcar como resuelto</button>
+                        </form>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<!-- Modal de Confirmación -->
+<div id="confirmModal" class="modal">
+    <div class="modal-content">
+        <h2>Confirmar Eliminación</h2>
+        <p>¿Estás seguro de eliminar el reporte de <span id="modalPetName"></span>?</p>
+        <div class="modal-actions">
+            <button id="confirmDelete" class="button resolve">Eliminar</button>
+            <button onclick="closeModal()" class="button lost">Cancelar</button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Variables globales para el control de eliminación
+        let currentDeleteId = null;
+        const token = document.querySelector('input[name="__RequestVerificationToken"]').value;
+
+        // Función para mostrar el modal
+        function showConfirmModal(id, name) {
+            currentDeleteId = id;
+            document.getElementById('modalPetName').textContent = name;
+            document.getElementById('confirmModal').style.display = 'block';
+        }
+
+        // Función para cerrar el modal
+        function closeModal() {
+            document.getElementById('confirmModal').style.display = 'none';
+        }
+
+        // Configuración inicial
+        document.addEventListener("DOMContentLoaded", function () {
+            // Configurar botones de eliminar
+            document.querySelectorAll('.delete-btn').forEach(btn => {
+                btn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const id = this.getAttribute('data-id');
+                    const name = this.getAttribute('data-name');
+                    showConfirmModal(id, name);
+                });
+            });
+
+            // Configurar botón de confirmación
+            document.getElementById('confirmDelete').addEventListener('click', async function () {
+                if (!currentDeleteId) return;
+
+                try {
+                    const response = await fetch(`/AnimalesPerdidos/DeleteConfirmed?id=${currentDeleteId}`, {
+                        method: "POST",
+                        headers: {
+                            'RequestVerificationToken': token,
+                            'Content-Type': 'application/json'
+                        }
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        if (data.success) {
+                            // Mostrar notificación y recargar
+                            showNotification('Reporte eliminado correctamente', 'success');
+                            setTimeout(() => location.reload(), 1000);
+                        } else {
+                            showNotification(data.message || 'Error al eliminar', 'error');
+                        }
+                    } else {
+                        showNotification('Error en la respuesta del servidor', 'error');
+                    }
+                } catch (error) {
+                    showNotification('Error de conexión: ' + error.message, 'error');
+                } finally {
+                    closeModal();
+                }
+            });
+
+            // Cerrar modal al hacer clic fuera
+            window.addEventListener('click', function (event) {
+                if (event.target === document.getElementById('confirmModal')) {
+                    closeModal();
+                }
+            });
+
+            // Configurar formularios de resolución
+            document.querySelectorAll('.resolve-form').forEach(form => {
+                form.addEventListener('submit', function (e) {
+                    e.preventDefault();
+
+                    const formData = new FormData(this);
+
+                    fetch(this.action, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'RequestVerificationToken': token
+                        }
+                    })
+                        .then(response => {
+                            if (response.ok) {
+                                return response.json();
+                            }
+                            throw new Error('Error en la respuesta del servidor');
+                        })
+                        .then(data => {
+                            if (data.success) {
+                                showNotification('Caso marcado como resuelto', 'success');
+                                setTimeout(() => location.reload(), 1000);
+                            } else {
+                                showNotification(data.message || 'Error al marcar como resuelto', 'error');
+                            }
+                        })
+                        .catch(error => {
+                            showNotification('Error: ' + error.message, 'error');
+                        });
+                });
+            });
+        });
+
+        function showNotification(message, type) {
+            alert(message);
+        }
+    </script>
+}

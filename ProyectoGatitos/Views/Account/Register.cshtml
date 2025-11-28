@@ -1,0 +1,249 @@
+﻿@model RegisterViewModel
+
+@{
+    ViewData["Title"] = "Registrarse";
+}
+
+<div class="auth-wrapper">
+    <div class="auth-container">
+        <div class="auth-header">
+            <h2 class="auth-title">🐾 Crear Cuenta</h2>
+            <p class="auth-subtitle">Únete a nuestra comunidad de amantes de los gatos</p>
+        </div>
+
+        <form asp-action="Register" method="post" class="auth-form">
+            @if (ViewData.ModelState.ErrorCount > 0)
+            {
+                <div asp-validation-summary="All" class="validation-errors"></div>
+            }
+
+
+
+            <div class="input-group">
+                <label asp-for="Email" class="input-label">Correo Electrónico</label>
+                <div class="input-container">
+                    <input asp-for="Email" class="form-input" placeholder="ejemplo@correo.com" />
+                    <span class="input-icon">✉️</span>
+                </div>
+                <span asp-validation-for="Email" class="input-error"></span>
+            </div>
+
+            <div class="input-group">
+                <label asp-for="Nombre"></label>
+                <div class="input-container">
+                    <input asp-for="Nombre" class="form-input" placeholder="Tu nombre" />
+                    <span asp-validation-for="Nombre" class="text-danger"></span>
+                </div>
+                <span asp-validation-for="Nombre" class="input-error"></span>
+            </div>
+            <div class="input-group">
+                <label asp-for="Apellido"></label>
+                <div class="input-container">
+                    <input asp-for="Apellido" class="form-input" placeholder="Tu apellido" />
+                    <span asp-validation-for="Apellido" class="text-danger"></span>
+                </div>
+                <span asp-validation-for="Apellido" class="input-error"></span>
+            </div>
+
+            <div class="input-group">
+                <label asp-for="Password" class="input-label">Contraseña</label>
+                <div class="input-container">
+                    <input asp-for="Password" class="form-input" placeholder="••••••••" />
+                    <span class="input-icon">🔑</span>
+                </div>
+                <span asp-validation-for="Password" class="input-error"></span>
+            </div>
+
+            <div class="input-group">
+                <label asp-for="ConfirmPassword" class="input-label">Confirmar Contraseña</label>
+                <div class="input-container">
+                    <input asp-for="ConfirmPassword" class="form-input" placeholder="••••••••" />
+                    <span class="input-icon">✅</span>
+                </div>
+                <span asp-validation-for="ConfirmPassword" class="input-error"></span>
+            </div>
+
+            <button type="submit" class="auth-btn">
+                <span class="btn-text">Registrarse</span>
+                <span class="btn-icon">→</span>
+            </button>
+        </form>
+
+        <div class="auth-footer">
+            <p>¿Ya tienes cuenta? <a href="@Url.Action("Login")" class="auth-link">Inicia sesión aquí</a></p>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <style>
+        /* Estilos base */
+        .auth-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh;
+            padding: 2rem;
+            background-color: rgba(255, 248, 240, 0.7);
+        }
+
+        .auth-container {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            padding: 2.5rem;
+            width: 100%;
+            max-width: 450px;
+            transition: transform 0.3s ease;
+        }
+
+            .auth-container:hover {
+                transform: translateY(-5px);
+            }
+
+        /* Encabezado */
+        .auth-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .auth-title {
+            color: #C45C2A;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .auth-subtitle {
+            color: #7A6A5F;
+            font-size: 1rem;
+        }
+
+        /* Formulario */
+        .auth-form {
+            margin-top: 1.5rem;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .input-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #5A4A42;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .input-container {
+            position: relative;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.8rem 1rem 0.8rem 2.5rem;
+            border: 2px solid #EDE5DE;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background-color: #FDFAF7;
+        }
+
+            .form-input:focus {
+                border-color: #D97B29;
+                box-shadow: 0 0 0 3px rgba(217, 123, 41, 0.1);
+                outline: none;
+            }
+
+        .input-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #C45C2A;
+        }
+
+        .input-error {
+            color: #E74C3C;
+            font-size: 0.85rem;
+            margin-top: 0.3rem;
+            display: block;
+        }
+
+        /* Botón */
+        .auth-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #D97B29, #C45C2A);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(217, 123, 41, 0.2);
+            margin-top: 1rem;
+        }
+
+            .auth-btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 12px rgba(217, 123, 41, 0.25);
+            }
+
+        .btn-icon {
+            font-size: 1.2rem;
+        }
+
+        /* Validación */
+        .validation-errors {
+            color: #E74C3C;
+            background-color: #FDEDEC;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            border-left: 4px solid #E74C3C;
+        }
+
+        /* Pie de formulario */
+        .auth-footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: #7A6A5F;
+            font-size: 0.95rem;
+        }
+
+        .auth-link {
+            color: #D97B29;
+            font-weight: 500;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+            .auth-link:hover {
+                color: #B84A14;
+                text-decoration: underline;
+            }
+
+        /* Responsive */
+        @@media (max-width: 480px) {
+            .auth-container {
+                padding: 1.5rem;
+            }
+
+            .auth-title {
+                font-size: 1.7rem;
+            }
+
+            .form-input {
+                padding: 0.7rem 0.9rem 0.7rem 2.3rem;
+            }
+        }
+    </style>
+}
